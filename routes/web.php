@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//后台路由
+Route::group(['prefix' => 'admin'],function(){
+    //后台登录页面
+    //Route::get('public/login',['\App\Http\Controllers\Admin\PublicController'])->name('login');
+    Route::get('public/login',function(){
+        return 'Hello World';
+    })->name('login');
+});
