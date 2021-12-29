@@ -40,6 +40,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        //自定义后端的guard
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admin',
+        ],
     ],
 
     /*
@@ -63,6 +69,12 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        //定义admin的provider
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin\Manager::class,
         ],
 
         // 'users' => [

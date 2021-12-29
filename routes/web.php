@@ -18,10 +18,13 @@ Route::get('/', function () {
 });
 
 //后台路由
-Route::group(['prefix' => 'admin'],function(){
+Route::group(['prefix' => 'admin','middleware'=>['auth:admin']],function(){
+    /**
+     * 后台登录模块路由
+     */
     //后台登录页面
-    //Route::get('public/login',['\App\Http\Controllers\Admin\PublicController'])->name('login');
-    Route::get('public/login',function(){
-        return 'Hello World';
-    })->name('login');
+    Route::get('public/login',[\App\Http\Controllers\Admin\PublicController::class,'login'])->name('login');
+    //验证登录
+    Route::post('public/check',[\App\Http\Controllers\Admin\PublicController::class,'check'])->name('check');
+
 });
