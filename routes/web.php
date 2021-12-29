@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 //后台路由
-Route::group(['prefix' => 'admin','middleware'=>['auth:admin']],function(){
+Route::group(['prefix' => 'admin'],function(){
     /**
      * 后台登录模块路由
      */
