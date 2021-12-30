@@ -18,15 +18,15 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label for="mobile" class="layui-form-label">
+                <label for="phone" class="layui-form-label">
                     <span class="x-red">*</span>手机
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="mobile" name="mobile" required="" lay-verify="phone"
+                    <input type="text" id="phone" name="mobile" required="" lay-verify="phone"
                            autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
-                    <span class="x-red">*</span>将会成为您唯一的登入名
+                    <span class="x-red">*</span>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -44,17 +44,18 @@
             <div class="layui-form-item">
                 <label class="layui-form-label"><span class="x-red">*</span>角色</label>
                 <div class="layui-input-block">
-                    <input type="checkbox" name="like1[write]" lay-skin="primary" title="超级管理员" checked="">
-                    <input type="checkbox" name="like1[read]" lay-skin="primary" title="编辑人员">
-                    <input type="checkbox" name="like1[write]" lay-skin="primary" title="宣传人员" checked="">
+                    <input type="radio" name="role" lay-skin="primary" title="超级管理员" value="1" >
+                    <input type="radio" name="role" lay-skin="primary" title="编辑人员" value="2" checked="">
+                    <input type="radio" name="role" lay-skin="primary" title="数字编辑人员" value="3">
+                    <input type="radio" name="role" lay-skin="primary" title="审核人员" value="4">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label"><span class="x-red">*</span>性别</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="gender" value="1" lay-skin="primary" title="男" checked="">
-                    <input type="radio" name="gender" value="2" lay-skin="primary" title="女">
-                    <input type="radio" name="gender" value="3" lay-skin="primary" title="保密">
+                    <input type="radio" name="gender" lay-skin="primary" value="1" title="男" checked="">
+                    <input type="radio" name="gender" lay-skin="primary" value="2" title="女">
+                    <input type="radio" name="gender" lay-skin="primary" value="3" title="保密">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -62,7 +63,7 @@
                     <span class="x-red">*</span>密码
                 </label>
                 <div class="layui-input-inline">
-                    <input type="password" id="L_pass" name="pass" required="" lay-verify="pass"
+                    <input type="password" id="L_pass" name="password" required="" lay-verify="pass"
                            autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
@@ -74,7 +75,7 @@
                     <span class="x-red">*</span>确认密码
                 </label>
                 <div class="layui-input-inline">
-                    <input type="password" id="L_repass" name="repass" required="" lay-verify="repass"
+                    <input type="password" id="L_repass" name="password_confirmation " required="" lay-verify="repass"
                            autocomplete="off" class="layui-input">
                 </div>
             </div>
@@ -85,12 +86,10 @@
                     增加
                 </button>
             </div>
+            {{ csrf_field() }}
         </form>
     </div>
 </div>
-@endsection
-
-@section('script')
 <script>
     layui.use(['form', 'layer'],
         function() {
@@ -118,6 +117,16 @@
                 function(data) {
                     console.log(data);
                     //发异步，把数据提交给php
+                    $.ajax({
+                        url: '/admin/manager/add',
+                        type: 'post',
+                        dataType: 'json',
+                        data: data.field,
+                        success:function (data) {
+                            console.log(data)
+                        }
+                    })
+
                     layer.alert("增加成功", {
                             icon: 6
                         },
