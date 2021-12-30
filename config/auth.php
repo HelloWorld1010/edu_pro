@@ -74,7 +74,7 @@ return [
         //定义admin的provider
         'admin' => [
             'driver' => 'eloquent',
-            'model' => App\Admin\Manager::class,
+            'model' => App\Models\Admin\Manager::class,
         ],
 
         // 'users' => [

@@ -61,6 +61,16 @@
             //     });
             //     return false;
             // });
+
+            //以弹窗形式输出错误的内容
+            @if(count($errors) > 0)
+                var allError='';
+                @foreach ($errors->all() as $error)
+                    allError += "{{$error}}<br/>";
+                @endforeach
+                //输出错误信息
+                layer.alert(allError,{title:'错误提示',icon:5});
+            @endif
         });
 
         //验证码
@@ -68,6 +78,8 @@
         $(".change_captcha").click(function () {
             $(".captcha").attr('src',src+'&_='+Math.random())
         })
+
+
     })
 
 
