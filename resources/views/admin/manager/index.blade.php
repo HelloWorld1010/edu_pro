@@ -74,7 +74,7 @@
                                 <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
                                     <i class="layui-icon">&#xe601;</i>
                                 </a>
-                                <a title="编辑"  onclick="xadmin.open('编辑','/admin/manager/edit')" href="javascript:;">
+                                <a title="编辑"  onclick="xadmin.open('编辑','/admin/manager/edit?id={{$user->id}}')" href="javascript:;">
                                     <i class="layui-icon">&#xe642;</i>
                                 </a>
                                 <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">

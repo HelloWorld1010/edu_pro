@@ -4,17 +4,29 @@
 @section('content')
     <div class="layui-fluid">
         <div class="layui-row">
-            <form class="layui-form">
+            <form class="layui-form" method="post" action="/admin/manager/add">
                 <div class="layui-form-item">
                     <label for="username" class="layui-form-label">
                         <span class="x-red">*</span>登录名
                     </label>
                     <div class="layui-input-inline">
                         <input type="text" id="username" name="username" required="" lay-verify="required"
-                               autocomplete="off" class="layui-input">
+                               autocomplete="off" class="layui-input" value="{{ $manager->username }}" disabled>
                     </div>
                     <div class="layui-form-mid layui-word-aux">
                         <span class="x-red">*</span>将会成为您唯一的登入名
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="nickname" class="layui-form-label">
+                        <span class="x-red">*</span>昵称
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="nickname" name="nickname" required="" lay-verify="required"
+                               autocomplete="off" class="layui-input" value="{{ $manager->nickname }}">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        <span class="x-red">*</span>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -22,11 +34,11 @@
                         <span class="x-red">*</span>手机
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="phone" name="phone" required="" lay-verify="phone"
-                               autocomplete="off" class="layui-input">
+                        <input type="text" id="phone" name="mobile" required="" lay-verify="phone"
+                               autocomplete="off" class="layui-input" value="{{ $manager->mobile }}">
                     </div>
                     <div class="layui-form-mid layui-word-aux">
-                        <span class="x-red">*</span>将会成为您唯一的登入名
+                        <span class="x-red">*</span>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -35,7 +47,7 @@
                     </label>
                     <div class="layui-input-inline">
                         <input type="text" id="L_email" name="email" required="" lay-verify="email"
-                               autocomplete="off" class="layui-input">
+                               autocomplete="off" class="layui-input" value="{{ $manager->email }}">
                     </div>
                     <div class="layui-form-mid layui-word-aux">
                         <span class="x-red">*</span>
@@ -44,9 +56,18 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="x-red">*</span>角色</label>
                     <div class="layui-input-block">
-                        <input type="checkbox" name="like1[write]" lay-skin="primary" title="超级管理员" checked="">
-                        <input type="checkbox" name="like1[read]" lay-skin="primary" title="编辑人员">
-                        <input type="checkbox" name="like1[write]" lay-skin="primary" title="宣传人员" checked="">
+                        <input type="radio" name="role_id" lay-skin="primary" title="超级管理员" value="1" @if($manager->role_id == 1) checked="" @endif >
+                        <input type="radio" name="role_id" lay-skin="primary" title="编辑人员" value="2" @if($manager->role_id == 2) checked="" @endif>
+                        <input type="radio" name="role_id" lay-skin="primary" title="数字编辑人员" value="3" @if($manager->role_id == 3) checked="" @endif>
+                        <input type="radio" name="role_id" lay-skin="primary" title="审核人员" value="4" @if($manager->role_id == 4) checked="" @endif>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="x-red">*</span>性别</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="gender" lay-skin="primary" value="1" title="男" @if($manager->gender == 1) checked="" @endif>
+                        <input type="radio" name="gender" lay-skin="primary" value="2" title="女" @if($manager->gender == 2) checked="" @endif>
+                        <input type="radio" name="gender" lay-skin="primary" value="3" title="保密" @if($manager->gender == 3) checked="" @endif>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -54,7 +75,7 @@
                         <span class="x-red">*</span>密码
                     </label>
                     <div class="layui-input-inline">
-                        <input type="password" id="L_pass" name="pass" required="" lay-verify="pass"
+                        <input type="password" id="L_pass" name="password" required="" lay-verify="pass"
                                autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux">
@@ -66,17 +87,16 @@
                         <span class="x-red">*</span>确认密码
                     </label>
                     <div class="layui-input-inline">
-                        <input type="password" id="L_repass" name="repass" required="" lay-verify="repass"
+                        <input type="password" id="L_repass" name="password_confirmation" required="" lay-verify="repass"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label for="L_repass" class="layui-form-label">
                     </label>
-                    <button  class="layui-btn" lay-filter="add" lay-submit="">
-                        增加
-                    </button>
+                    <input type="submit" class="layui-btn" value="修改">
                 </div>
+                {{ csrf_field() }}
             </form>
         </div>
     </div>
@@ -105,20 +125,47 @@
                 //监听提交
                 form.on('submit(add)',
                     function(data) {
-                        console.log(data);
+                        //console.log(data);
                         //发异步，把数据提交给php
-                        layer.alert("增加成功", {
-                                icon: 6
-                            },
-                            function() {
-                                //关闭当前frame
-                                xadmin.close();
+                        // $.ajax({
+                        //     url: '/admin/manager/add',
+                        //     type: 'post',
+                        //     dataType: 'json',
+                        //     data: data.field,
+                        //     success:function (data) {
+                        //         console.log(data)
+                        //     },
+                        //
+                        // })
 
-                                // 可以对父窗口进行刷新
-                                xadmin.father_reload();
-                            });
-                        return false;
+                        {{--                    @if(count($errors) > 0)--}}
+                        {{--                        var allError='';--}}
+                        {{--                        @foreach ($errors->all() as $error)--}}
+                        {{--                            allError += "{{$error}}<br/>";--}}
+                        {{--                        @endforeach--}}
+                        {{--                        //输出错误信息--}}
+                        {{--                        layer.alert(allError,{title:'错误提示',icon:5});--}}
+                        {{--                    @else--}}
+                        {{--                        layer.alert("增加成功", {--}}
+                        {{--                            icon: 6--}}
+                        {{--                        }, function() {--}}
+                        {{--                            //关闭当前frame--}}
+                        {{--                            xadmin.close();--}}
+
+                        {{--                            // 可以对父窗口进行刷新--}}
+                        {{--                            xadmin.father_reload();--}}
+                        {{--                        });--}}
+                        {{--                        return false;--}}
+                        {{--                    @endif--}}
                     });
+                @if(count($errors) > 0)
+                    var allError='';
+                    @foreach ($errors->all() as $error)
+                        allError += "{{$error}}<br/>";
+                    @endforeach
+                    //输出错误信息
+                    layer.alert(allError,{title:'错误提示',icon:5});
+                @endif
 
             });
     </script>
