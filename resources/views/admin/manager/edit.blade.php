@@ -4,7 +4,7 @@
 @section('content')
     <div class="layui-fluid">
         <div class="layui-row">
-            <form class="layui-form" method="post" action="/admin/manager/add">
+            <form class="layui-form" method="post" action="/admin/manager/edit?id={{$manager->id}}">
                 <div class="layui-form-item">
                     <label for="username" class="layui-form-label">
                         <span class="x-red">*</span>登录名

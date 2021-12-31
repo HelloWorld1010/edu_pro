@@ -4,7 +4,7 @@
 @section('content')
     <div class="layui-fluid">
         <div class="layui-row">
-            <form class="layui-form" method="post" action="/admin/manager/add">
+            <form class="layui-form" method="post">
                 <div class="layui-form-item">
                     <label for="username" class="layui-form-label">
                         <span class="x-red">*</span>登录名
@@ -94,10 +94,10 @@
                 <div class="layui-form-item">
                     <label for="L_repass" class="layui-form-label">
                     </label>
-    {{--                <button  class="layui-btn" lay-filter="add" lay-submit="">--}}
-    {{--                    增加--}}
-    {{--                </button>--}}
-                    <input type="submit" class="layui-btn" value="增加">
+                    <button  class="layui-btn" lay-filter="add" lay-submit="">
+                        增加
+                    </button>
+{{--                    <input type="submit" class="layui-btn" value="增加">--}}
                 </div>
                 {{ csrf_field() }}
             </form>

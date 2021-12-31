@@ -10,6 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 class Manager extends Model  implements \Illuminate\Contracts\Auth\Authenticatable
 {
     protected $table = 'manager';
+    protected $fillable = ['username','password','mobile','email','role_id','gender','nickname','status'];
 
     use HasFactory;
     use HasRoles;
