@@ -45,4 +45,5 @@ Route::group(['prefix' => 'admin','middleware' => ['auth:admin']],function(){
     Route::get('manager/index',[\App\Http\Controllers\Admin\ManagerController::class,'index']);
     //添加
     Route::match(['get','post'],'manager/add',[\App\Http\Controllers\Admin\ManagerController::class,'add']);
+    Route::match(['get','post'],'manager/edit',[\App\Http\Controllers\Admin\ManagerController::class,'edit']);
 });
